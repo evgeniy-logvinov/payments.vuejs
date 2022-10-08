@@ -13,11 +13,9 @@ const signInWIthGoogle = () => {
   const provider = new GoogleAuthProvider()
   signInWithPopup(auth, provider)
     .then((result) => {
-      console.log('done', result)
       router.push({ name: 'Dashboard' })
     })
     .catch(() => console.log('error'))
-  console.log('with google')
 }
 async function onSignIn() {
   try {
