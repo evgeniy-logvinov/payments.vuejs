@@ -33,7 +33,8 @@ const signOut = async () => {
         <div class="card">
           <div v-if="isLoggedIn">
             <div class="card-header">
-              Welcome, {{ userData && userData.email }}
+              Welcome,
+              {{ userData && (userData.email || userData.displayName) }}
             </div>
             <div class="card-body"></div>
           </div>
