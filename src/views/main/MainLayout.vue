@@ -11,36 +11,36 @@ const isLoggedIn = computed(() => {
 const signOut = async () => {
   const { logOut } = useUserStore()
   await logOut()
-  router.push('/')
+  router.push({ name: 'SignIn' })
 }
 </script>
 
 <template>
-  <header>
+  <!-- <header>
     <div class="wrapper">
-      <nav>
-        <!-- <RouterLink :to="{ name: 'Main' }">Home</RouterLink> -->
-        <template v-if="isLoggedIn">
+      <nav> -->
+  <!-- <RouterLink :to="{ name: 'Main' }">Home</RouterLink> -->
+  <!-- <template v-if="isLoggedIn">
           <RouterLink :to="{ name: 'Payments' }">Payments</RouterLink>
           <RouterLink :to="{ name: 'Dashboard' }">Dashboard</RouterLink>
           <RouterLink :to="{ name: 'Events' }">Events</RouterLink>
           <RouterLink :to="{ name: 'Counter' }">Counter</RouterLink>
-        </template>
-        <!-- <template v-else>
+        </template> -->
+  <!-- <template v-else>
           <RouterLink :to="{ name: 'About', query: { e: 'true' } }"
             >About</RouterLink
           >
           <RouterLink :to="{ name: 'SignIn' }">SignIn</RouterLink>
           <RouterLink :to="{ name: 'SignUp' }">SignUp</RouterLink>
         </template> -->
-      </nav>
+  <!-- </nav>
       <div class="my-4" v-if="isLoggedIn">
         <button @click.prevent="signOut" class="btn btn-primary">
           Log Out
         </button>
       </div>
     </div>
-  </header>
+  </header> -->
 
   <div class="content">
     <RouterView />
@@ -48,16 +48,19 @@ const signOut = async () => {
 </template>
 
 <style scoped>
-header {
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* header {
   width: 100%;
   line-height: 1.5;
   max-height: 100vh;
 }
-/* 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-} */
 
 .content {
   display: flex;
@@ -115,5 +118,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-}
+} */
 </style>
