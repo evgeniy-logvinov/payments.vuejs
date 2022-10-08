@@ -1,3 +1,5 @@
+import { auth } from '@/firebaseConfig'
+import { onAuthStateChanged } from '@firebase/auth'
 import { createRouter, createWebHistory } from 'vue-router'
 
 // https://router.vuejs.org/guide/essentials/history-mode.html#example-server-configurations
@@ -10,13 +12,17 @@ const router = createRouter({
       path: '/',
       name: 'Main',
       component: () => import('../views/main/MainLayout.vue'),
-      redirect: { name: 'Public' },
+      redirect: { name: 'Private' },
       children: [
         {
           path: '/private',
           name: 'Private',
           // props: (route) => ({ page: parseInt(route.query.page as string) || 1 }),
           component: () => import('../views/private/PrivateLayout.vue'),
+          redirect: { name: 'Dashboard' },
+          meta: {
+            requiresAuth: true
+          },
           children: [
             {
               path: '',
@@ -78,35 +84,41 @@ const router = createRouter({
               component: () => import('../views/private/PrivateCounter.vue')
             }
           ]
-        },
-        {
-          path: '/public',
-          name: 'Public',
-          // props: (route) => ({ page: parseInt(route.query.page as string) || 1 }),
-          component: () => import('../views/public/PublicLayout.vue'),
-          redirect: { name: 'About' },
-          children: [
-            {
-              path: '/about',
-              name: 'About',
-              // route level code-splitting
-              // this generates a separate chunk (About.[hash].js) for this route
-              // which is lazy-loaded when the route is visited.
-              component: () => import('../views/public/PublicAbout.vue')
-            }
-          ]
         }
+        // {
+        //   path: '/public',
+        //   name: 'Public',
+        //   // props: (route) => ({ page: parseInt(route.query.page as string) || 1 }),
+        //   component: () => import('../views/public/PublicLayout.vue'),
+        //   redirect: { name: 'About' },
+        //   children: [
+        //     {
+        //       path: '/about',
+        //       name: 'About',
+        //       // route level code-splitting
+        //       // this generates a separate chunk (About.[hash].js) for this route
+        //       // which is lazy-loaded when the route is visited.
+        //       component: () => import('../views/public/PublicAbout.vue')
+        //     }
+        //   ]
+        // }
       ]
     },
     {
       path: '/signup',
       name: 'SignUp',
-      component: () => import('../views/SignUp.vue')
+      component: () => import('../views/SignUp.vue'),
+      meta: {
+        registration: true
+      }
     },
     {
       path: '/login',
       name: 'SignIn',
-      component: () => import('../views/LogIn.vue')
+      component: () => import('../views/LogIn.vue'),
+      meta: {
+        registration: true
+      }
     },
     {
       path: '/:catchAll(.*)',
@@ -122,4 +134,38 @@ const router = createRouter({
   ]
 })
 
+const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const removeListener = onAuthStateChanged(
+      auth,
+      (user) => {
+        removeListener()
+        resolve(user)
+      },
+      reject
+    )
+  })
+}
+
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    console.log('require')
+    if (await getCurrentUser()) {
+      console.log('logged in')
+      next()
+    } else {
+      // alert('Do not access')
+      next('/login')
+    }
+  } else if (to.matched.some((record) => record.meta.registration)) {
+    if (await getCurrentUser()) {
+      console.log('logged in')
+      next('/')
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
 export default router

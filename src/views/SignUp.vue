@@ -94,7 +94,7 @@ async function onSignUp() {
               </div>
               <div class="form-group row mb-0">
                 <nav>
-                  <RouterLink :to="{ name: 'Main' }">to Home</RouterLink>
+                  <!-- <RouterLink :to="{ name: 'Main' }">to Home</RouterLink> -->
                   <RouterLink :to="{ name: 'SignIn' }">to SignIn</RouterLink>
                 </nav>
               </div>

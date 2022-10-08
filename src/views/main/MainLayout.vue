@@ -19,20 +19,20 @@ const signOut = async () => {
   <header>
     <div class="wrapper">
       <nav>
-        <RouterLink :to="{ name: 'Main' }">Home</RouterLink>
-        <RouterLink :to="{ name: 'About', query: { e: 'true' } }"
-          >About</RouterLink
-        >
+        <!-- <RouterLink :to="{ name: 'Main' }">Home</RouterLink> -->
         <template v-if="isLoggedIn">
           <RouterLink :to="{ name: 'Payments' }">Payments</RouterLink>
           <RouterLink :to="{ name: 'Dashboard' }">Dashboard</RouterLink>
           <RouterLink :to="{ name: 'Events' }">Events</RouterLink>
           <RouterLink :to="{ name: 'Counter' }">Counter</RouterLink>
         </template>
-        <template v-else>
+        <!-- <template v-else>
+          <RouterLink :to="{ name: 'About', query: { e: 'true' } }"
+            >About</RouterLink
+          >
           <RouterLink :to="{ name: 'SignIn' }">SignIn</RouterLink>
           <RouterLink :to="{ name: 'SignUp' }">SignUp</RouterLink>
-        </template>
+        </template> -->
       </nav>
       <div class="my-4" v-if="isLoggedIn">
         <button @click.prevent="signOut" class="btn btn-primary">

@@ -86,7 +86,10 @@ async function onSignIn() {
 
               <div class="form-group row">
                 <div class="col-md-8 offset-md-4">
-                  <button class="btn btn-primary" @click="signInWIthGoogle">
+                  <button
+                    class="btn btn-primary"
+                    @click.prevent="signInWIthGoogle"
+                  >
                     SignIn with google
                   </button>
                 </div>
@@ -99,7 +102,7 @@ async function onSignIn() {
               </div>
               <div class="form-group row mb-0">
                 <nav>
-                  <RouterLink :to="{ name: 'Main' }">to Home</RouterLink>
+                  <!-- <RouterLink :to="{ name: 'Main' }">to Home</RouterLink> -->
                   <RouterLink :to="{ name: 'SignUp' }">to SignUp</RouterLink>
                 </nav>
               </div>
