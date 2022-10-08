@@ -8,15 +8,15 @@ const email = ref('')
 const password = ref('')
 const error = ref<string | null>(null)
 
-async function onRegister() {
+async function onSignUp() {
   try {
-    const { register } = useUserStore()
-    await register({
+    const { signUp } = useUserStore()
+    await signUp({
       email: email.value,
       password: password.value,
       name: name.value
     })
-    router.push('/')
+    router.push({ name: 'Dashboard' })
   } catch (err) {
     error.value = (err as Error).message
   }
@@ -31,7 +31,7 @@ async function onRegister() {
           <div class="card-header">Register</div>
           <div class="card-body">
             <div v-if="error" class="alert alert-danger">{{ error }}</div>
-            <form action="#" @submit.prevent="onRegister">
+            <form action="#" @submit.prevent="onSignUp">
               <div class="form-group row">
                 <label for="name" class="col-md-4 col-form-label text-md-right"
                   >Name</label
@@ -89,10 +89,14 @@ async function onRegister() {
 
               <div class="form-group row mb-0">
                 <div class="col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-primary">
-                    Register
-                  </button>
+                  <button type="submit" class="btn btn-primary">SignUp</button>
                 </div>
+              </div>
+              <div class="form-group row mb-0">
+                <nav>
+                  <RouterLink :to="{ name: 'Main' }">to Home</RouterLink>
+                  <RouterLink :to="{ name: 'SignIn' }">to SignIn</RouterLink>
+                </nav>
               </div>
             </form>
           </div>
@@ -101,3 +105,39 @@ async function onRegister() {
     </div>
   </div>
 </template>
+<style scoped>
+nav {
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+nav a.router-link-exact-active {
+  color: var(--color-text);
+}
+
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+nav a:first-of-type {
+  border: 0;
+}
+
+@media (min-width: 1024px) {
+  nav {
+    text-align: left;
+    font-size: 1rem;
+
+    padding: 1rem 0;
+    margin-top: 1rem;
+  }
+}
+</style>

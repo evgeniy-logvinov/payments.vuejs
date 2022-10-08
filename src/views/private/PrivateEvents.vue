@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watchEffect } from 'vue'
-import EventCard from '../components/EventCard.vue'
-import type { EventInfo } from '../interfaces/EventInfo'
+import type { EventInfo } from '../../interfaces/EventInfo'
 import EventService from '@/services/EventService'
+import EventCard from '../../components/EventCard.vue'
 
 const events = ref<EventInfo[]>([])
 const props = withDefaults(defineProps<{ page?: string | number }>(), {
@@ -21,7 +21,6 @@ const hasNextPage = computed((): boolean => {
   // Then check to see if the current page is less than the total pages.
   return currentPage.value < totalPages
 })
-
 // onMounted(async () => {
 //   const response = await EventService.getEvents(2, currentPage.value)
 //   events.value = response.data
@@ -52,7 +51,7 @@ watchEffect(() => {
     <div class="pagination">
       <router-link
         id="page-prev"
-        :to="{ name: 'EventList', query: { page: currentPage - 1 } }"
+        :to="{ name: 'Events', query: { page: currentPage - 1 } }"
         rel="prev"
         v-if="page != 1"
         >Prev Page</router-link
@@ -60,7 +59,7 @@ watchEffect(() => {
 
       <router-link
         id="page-next"
-        :to="{ name: 'EventList', query: { page: currentPage + 1 } }"
+        :to="{ name: 'Events', query: { page: currentPage + 1 } }"
         rel="next"
         v-if="hasNextPage"
         >Next Page</router-link

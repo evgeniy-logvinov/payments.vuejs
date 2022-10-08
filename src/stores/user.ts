@@ -3,14 +3,14 @@ import { defineStore } from 'pinia'
 import {
   signInWithEmailAndPassword,
   signOut,
-  createUserWithEmailAndPassword
-  // UserCredential
+  createUserWithEmailAndPassword,
+  type User
 } from 'firebase/auth'
 import { auth } from '../firebaseConfig'
+import { computed } from 'vue'
 
 interface UserInfo {
   loggedIn: boolean
-  // data: UserCredential
   data: any
 }
 
@@ -20,7 +20,15 @@ export const useUserStore = defineStore('user', () => {
     data: null
   })
 
-  async function register({ email, password, name }) {
+  async function signUp({
+    email,
+    password,
+    name
+  }: {
+    email: string
+    password: string
+    name: string
+  }) {
     const response = await createUserWithEmailAndPassword(auth, email, password)
     if (response) {
       user.data = response
@@ -28,16 +36,22 @@ export const useUserStore = defineStore('user', () => {
       // console.log(name)!!!!!
       // response.updateProfile({ displayName: name })
     } else {
-      throw new Error('Unable to register user')
+      throw new Error('Unable to signup user')
     }
   }
 
-  async function logIn({ email, password }) {
+  async function signIn({
+    email,
+    password
+  }: {
+    email: string
+    password: string
+  }) {
     const response = await signInWithEmailAndPassword(auth, email, password)
     if (response) {
       user.data = response
     } else {
-      throw new Error('login failed')
+      throw new Error('SignIn failed')
     }
   }
 
@@ -46,10 +60,9 @@ export const useUserStore = defineStore('user', () => {
     user.data = null
   }
 
-  async function fetchUser(userInfo) {
-    console.log(user)
-    user.loggedIn = user !== null
-    if (user) {
+  async function fetchUser(userInfo: User | null) {
+    user.loggedIn = userInfo !== null
+    if (userInfo) {
       user.data = {
         displayName: userInfo.displayName,
         email: userInfo.email
@@ -58,10 +71,8 @@ export const useUserStore = defineStore('user', () => {
       user.data = null
     }
   }
-  // function increment() {
-  //   count.value++
-  // }
 
-  // return { user, doubleCount, increment }
-  return { user, logIn, logOut, fetchUser, register }
+  const isLoggedIn = computed(() => !!user.loggedIn)
+  const userData = computed(() => user.data)
+  return { user, userData, signIn, logOut, fetchUser, signUp, isLoggedIn }
 })

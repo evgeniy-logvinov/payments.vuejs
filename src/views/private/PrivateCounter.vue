@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import ReviewInfo from '../components/ReviewInfo.vue'
-import ReviewCounter from '../components/ReviewCounter.vue'
+import ReviewInfo from '../../components/ReviewInfo.vue'
+import ReviewCounter from '../../components/ReviewCounter.vue'
 import type { ReviewItem } from '@/interfaces/ReviewItem'
 
 const reviews = reactive<ReviewItem[]>([])
