@@ -26,7 +26,7 @@ const onBuy = async (type: TariffType) => {
 <template>
   <el-row>
     <el-col :span="12">
-      <el-card class="m-4">
+      <el-card class="my-4 mr-2">
         <template #header>
           <div class="flex justify-between">
             <span>Tariff 1</span>
@@ -45,7 +45,7 @@ const onBuy = async (type: TariffType) => {
       </el-card>
     </el-col>
     <el-col :span="12">
-      <el-card class="m-4">
+      <el-card class="my-4 ml-2">
         <template #header>
           <div class="flex justify-between">
             <span>Tariff 2</span>

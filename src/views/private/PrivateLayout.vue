@@ -36,6 +36,9 @@ const signOut = async () => {
     <el-aside width="200px">
       <el-scrollbar>
         <el-menu
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
           :default-active="defaultActive"
           router
           class="el-menu-vertical-demo"
@@ -119,12 +122,13 @@ const signOut = async () => {
 <style scoped>
 .layout-container-demo .el-header {
   position: relative;
-  background-color: var(--el-color-primary-light-7);
-  color: var(--el-text-color-primary);
+  border: 1px solid var(--el-card-border-color);
+  /* background-color: var(--el-color-primary-light-7); */
+  /* color: var(--el-text-color-primary); */
 }
 .layout-container-demo .el-aside {
-  color: var(--el-text-color-primary);
-  background: var(--el-color-primary-light-8);
+  /* color: var(--el-text-color-primary);
+  background: var(--el-color-primary-light-8); */
 }
 .layout-container-demo .el-menu {
   border-right: none;
@@ -144,7 +148,10 @@ header {
   line-height: 1.5;
   max-height: 100vh;
 }
-/* 
+.el-scrollbar {
+  background-color: #545c64;
+}
+/*
 .logo {
   display: block;
   margin: 0 auto 2rem;

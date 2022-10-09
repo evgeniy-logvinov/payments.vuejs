@@ -21,10 +21,10 @@ const signOut = async () => {
 </script>
 
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
+  <el-container>
+    <el-row class="w-full my-4"
+      ><el-col :span="24">
+        <el-card>
           <div v-if="isLoggedIn">
             <div class="card-header">Welcome, {{ userName }}</div>
             <div class="card-body"></div>
@@ -32,8 +32,8 @@ const signOut = async () => {
           <div v-else class="alert alert-danger" role="alert">
             You are not logged in!
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        </el-card>
+      </el-col></el-row
+    >
+  </el-container>
 </template>

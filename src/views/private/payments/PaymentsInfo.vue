@@ -40,7 +40,7 @@ async function onBuy() {
 <template>
   <el-row
     ><el-col>
-      <el-card>
+      <el-card class="my-4">
         <template #header>
           <div class="card-header">
             <span>Payments info</span>
