@@ -12,12 +12,18 @@ function reviewSubmitted(review: ReviewItem) {
 }
 </script>
 <template>
-  <div class="review">
-    <h1>Show extra: {{ props.showExtra }}</h1>
-    <div v-if="reviews.length">Reviews: {{ reviews }}</div>
-    <ReviewInfo @review-submitted="reviewSubmitted"></ReviewInfo>
-    <ReviewCounter :limit="20"></ReviewCounter>
-  </div>
+  <el-container
+    ><el-row class="w-full my-4"
+      ><el-col>
+        <el-card>
+          <template #header>
+            <h1>Show extra: {{ props.showExtra }}</h1>
+          </template>
+          <div v-if="reviews.length">Reviews: {{ reviews }}</div>
+          <ReviewInfo @review-submitted="reviewSubmitted"></ReviewInfo>
+          <ReviewCounter :limit="20"></ReviewCounter>
+        </el-card> </el-col></el-row
+  ></el-container>
 </template>
 
 <style>

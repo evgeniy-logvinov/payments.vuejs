@@ -11,16 +11,31 @@ onMounted(async () => {
 })
 </script>
 <template>
-  <div v-if="event">
-    <h1>{{ event.title }}</h1>
-    <div id="nav">
-      <!-- Don't need ID here in params because it will get from parent -->
-      <router-link :to="{ name: 'EventDetails' }">Details</router-link>
-      |
-      <router-link :to="{ name: 'EventRegister' }">Register</router-link>
-      |
-      <router-link :to="{ name: 'EventEdit' }">Edit</router-link>
-    </div>
-    <router-view :event="event"></router-view>
-  </div>
+  <el-container
+    ><el-row class="w-full my-4"
+      ><el-col>
+        <el-card>
+          <template #header>
+            <div v-if="event">
+              <el-space :size="100">
+                <h1>{{ event.title }}</h1>
+                <div id="nav">
+                  <!-- Don't need ID here in params because it will get from parent -->
+                  <router-link :to="{ name: 'EventDetails' }"
+                    >Details</router-link
+                  >
+                  |
+                  <router-link :to="{ name: 'EventRegister' }"
+                    >Register</router-link
+                  >
+                  |
+                  <router-link :to="{ name: 'EventEdit' }">Edit</router-link>
+                </div>
+              </el-space>
+            </div>
+          </template>
+          <div v-if="event">
+            <router-view :event="event"></router-view></div
+        ></el-card> </el-col></el-row
+  ></el-container>
 </template>

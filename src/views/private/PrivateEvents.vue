@@ -41,31 +41,39 @@ watchEffect(() => {
 // limit page
 </script>
 <template>
-  <div class="events">
-    <h1>Events for good</h1>
-    <EventCard
-      v-for="event in events"
-      :key="event.id"
-      :event="event"
-    ></EventCard>
-    <div class="pagination">
-      <router-link
-        id="page-prev"
-        :to="{ name: 'Events', query: { page: currentPage - 1 } }"
-        rel="prev"
-        v-if="page != 1"
-        >Prev Page</router-link
-      >
+  <el-container>
+    <el-row class="w-full my-4"
+      ><el-col>
+        <el-card>
+          <div class="events">
+            <h1>Events for good</h1>
+            <EventCard
+              v-for="event in events"
+              :key="event.id"
+              :event="event"
+            ></EventCard>
+            <div class="pagination">
+              <router-link
+                id="page-prev"
+                :to="{ name: 'Events', query: { page: currentPage - 1 } }"
+                rel="prev"
+                v-if="page != 1"
+                >Prev Page</router-link
+              >
 
-      <router-link
-        id="page-next"
-        :to="{ name: 'Events', query: { page: currentPage + 1 } }"
-        rel="next"
-        v-if="hasNextPage"
-        >Next Page</router-link
-      >
-    </div>
-  </div>
+              <router-link
+                id="page-next"
+                :to="{ name: 'Events', query: { page: currentPage + 1 } }"
+                rel="next"
+                v-if="hasNextPage"
+                >Next Page</router-link
+              >
+            </div>
+          </div>
+        </el-card>
+      </el-col></el-row
+    >
+  </el-container>
 </template>
 
 <style>
@@ -84,7 +92,7 @@ watchEffect(() => {
   .pagination a {
     flex: 1;
     text-decoration: none;
-    color: var(--color-text);
+    /* color: var(--color-text); */
   }
 
   #page-prev {
