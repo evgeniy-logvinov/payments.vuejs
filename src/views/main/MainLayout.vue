@@ -3,16 +3,16 @@ import { computed } from 'vue'
 import router from '../../router'
 import { useUserStore } from '../../stores/user'
 
-const isLoggedIn = computed(() => {
-  const { isLoggedIn } = useUserStore()
-  return isLoggedIn
-})
+// const isLoggedIn = computed(() => {
+//   const { isLoggedIn } = useUserStore()
+//   return isLoggedIn
+// })
 
-const signOut = async () => {
-  const { logOut } = useUserStore()
-  await logOut()
-  router.push({ name: 'SignIn' })
-}
+// const signOut = async () => {
+//   const { logOut } = useUserStore()
+//   await logOut()
+//   router.push({ name: 'SignIn' })
+// }
 </script>
 
 <template>
@@ -42,9 +42,9 @@ const signOut = async () => {
     </div>
   </header> -->
 
-  <div class="content">
-    <RouterView />
-  </div>
+  <!-- <div class="content"> -->
+  <RouterView />
+  <!-- </div> -->
 </template>
 
 <style scoped>
@@ -52,7 +52,7 @@ const signOut = async () => {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  align-items: center;
+  /* align-items: center; */
   min-height: 100vh;
 }
 

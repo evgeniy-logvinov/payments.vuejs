@@ -73,6 +73,8 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const isLoggedIn = computed(() => !!user.loggedIn)
-  const userData = computed(() => user.data)
-  return { user, userData, signIn, logOut, fetchUser, signUp, isLoggedIn }
+  const userName = computed(
+    () => user.data && (user.data.email || user.data.displayName)
+  )
+  return { user, userName, signIn, logOut, fetchUser, signUp, isLoggedIn }
 })

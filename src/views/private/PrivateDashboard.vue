@@ -9,9 +9,9 @@ auth.onAuthStateChanged(async (user) => {
   await fetchUser(user)
 })
 
-const userData = computed(() => {
-  const { userData } = useUserStore()
-  return userData
+const userName = computed(() => {
+  const { userName } = useUserStore()
+  return userName
 })
 
 const isLoggedIn = computed(() => {
@@ -32,10 +32,7 @@ const signOut = async () => {
       <div class="col-md-8">
         <div class="card">
           <div v-if="isLoggedIn">
-            <div class="card-header">
-              Welcome,
-              {{ userData && (userData.email || userData.displayName) }}
-            </div>
+            <div class="card-header">Welcome, {{ userName }}</div>
             <div class="card-body"></div>
           </div>
           <div v-else class="alert alert-danger" role="alert">

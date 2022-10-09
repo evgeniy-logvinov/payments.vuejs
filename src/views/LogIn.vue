@@ -1,14 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useUserStore } from '../stores/user'
 import router from '../router'
 import { GoogleAuthProvider, signInWithPopup } from '@firebase/auth'
 import { auth } from '../firebaseConfig'
-
+// TODO: validation
+// TODO: submit.prevent check
 const email = ref('')
 const password = ref('')
 const error = ref<string | null>(null)
 
+const form: {
+  email: string
+  password: string
+} = reactive({
+  email: '',
+  password: ''
+})
 const signInWIthGoogle = () => {
   const provider = new GoogleAuthProvider()
   signInWithPopup(auth, provider)
@@ -20,10 +28,7 @@ const signInWIthGoogle = () => {
 async function onSignIn() {
   try {
     const { signIn } = useUserStore()
-    await signIn({
-      email: email.value,
-      password: password.value
-    })
+    await signIn({ ...form })
     router.push({ name: 'Dashboard' })
   } catch (err) {
     // TODO: error example on loading
@@ -37,79 +42,55 @@ async function onSignIn() {
 </script>
 
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">SignIn</div>
-          <div class="card-body">
-            <div v-if="error" class="alert alert-danger">{{ error }}</div>
-            <form action="#" @submit.prevent="onSignIn">
-              <div class="form-group row">
-                <label for="email" class="col-md-4 col-form-label text-md-right"
-                  >Email</label
+  <el-container>
+    <el-main>
+      <el-scrollbar>
+        <el-row>
+          <el-col :span="7" :offset="8">
+            <el-form :model="form" label-width="120px" @submit.prevent>
+              <el-form-item
+                prop="email"
+                label="Email"
+                :rules="[
+                  {
+                    required: true,
+                    message: 'Please input email address',
+                    trigger: 'blur'
+                  },
+                  {
+                    type: 'email',
+                    message: 'Please input correct email address',
+                    trigger: ['blur', 'change']
+                  }
+                ]"
+              >
+                <el-input v-model="form.email" />
+              </el-form-item>
+              <el-form-item label="Password" prop="pass">
+                <el-input
+                  v-model="form.password"
+                  type="password"
+                  autocomplete="off"
+                />
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="onSignIn">SignIn</el-button>
+                <el-button @click.prevent="signInWIthGoogle"
+                  >SignIn with google</el-button
                 >
-
-                <div class="col-md-6">
-                  <input
-                    id="email"
-                    type="email"
-                    class="form-control"
-                    name="email"
-                    required
-                    autofocus
-                    v-model="email"
-                  />
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label
-                  for="password"
-                  class="col-md-4 col-form-label text-md-right"
-                  >Password</label
+              </el-form-item>
+              <el-form-item>
+                New to Fluenta?
+                <el-button link @click="router.push({ name: 'SignUp' })"
+                  >Create an account.</el-button
                 >
-
-                <div class="col-md-6">
-                  <input
-                    id="password"
-                    type="password"
-                    class="form-control"
-                    name="password"
-                    required
-                    v-model="password"
-                  />
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <div class="col-md-8 offset-md-4">
-                  <button
-                    class="btn btn-primary"
-                    @click.prevent="signInWIthGoogle"
-                  >
-                    SignIn with google
-                  </button>
-                </div>
-              </div>
-
-              <div class="form-group row mb-0">
-                <div class="col-md-8 offset-md-4">
-                  <button type="submit" class="btn btn-primary">SignIn</button>
-                </div>
-              </div>
-              <div class="form-group row mb-0">
-                <nav>
-                  <!-- <RouterLink :to="{ name: 'Main' }">to Home</RouterLink> -->
-                  <RouterLink :to="{ name: 'SignUp' }">to SignUp</RouterLink>
-                </nav>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+              </el-form-item>
+            </el-form></el-col
+          ></el-row
+        >
+      </el-scrollbar>
+    </el-main>
+  </el-container>
 </template>
 
 <style scoped>

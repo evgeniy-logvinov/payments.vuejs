@@ -3,9 +3,9 @@ import { computed } from 'vue'
 import router from '../../router'
 import { useUserStore } from '../../stores/user'
 
-const isLoggedIn = computed(() => {
-  const { isLoggedIn } = useUserStore()
-  return isLoggedIn
+const userName = computed(() => {
+  const { userName } = useUserStore()
+  return userName
 })
 
 const signOut = async () => {
@@ -16,36 +16,110 @@ const signOut = async () => {
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <nav>
-        <!-- <RouterLink :to="{ name: 'Main' }">Home</RouterLink> -->
-        <template v-if="isLoggedIn">
-          <RouterLink :to="{ name: 'Dashboard' }">Dashboard</RouterLink>
-          <RouterLink :to="{ name: 'Payments' }">Payments</RouterLink>
-          <RouterLink :to="{ name: 'Events' }">Events</RouterLink>
-          <RouterLink :to="{ name: 'Counter' }">Counter</RouterLink>
-        </template>
-        <!-- <template v-else>
-          <RouterLink :to="{ name: 'About', query: { e: 'true' } }"
-            >About</RouterLink
-          >
-          <RouterLink :to="{ name: 'SignIn' }">SignIn</RouterLink>
-          <RouterLink :to="{ name: 'SignUp' }">SignUp</RouterLink>
-        </template> -->
-      </nav>
-      <div class="my-4" v-if="isLoggedIn">
-        <button @click.prevent="signOut" class="btn btn-primary">
-          Log Out
-        </button>
-      </div>
-    </div>
-  </header>
+  <el-container class="layout-container-demo" style="height: 500px">
+    <el-aside width="200px">
+      <el-scrollbar>
+        <el-menu
+          default-active="/private/"
+          router
+          class="el-menu-vertical-demo"
+        >
+          <el-menu-item index="/private/" :route="{ name: 'Dashboard' }">
+            <el-icon><service /></el-icon>
+            <span>Dashboard</span>
+          </el-menu-item>
+          <el-menu-item index="/private/payments" :route="{ name: 'Payments' }">
+            <el-icon><money /></el-icon>
+            <span>Payments</span>
+          </el-menu-item>
+          <el-menu-item index="/private/events" :route="{ name: 'Events' }">
+            <el-icon><document /></el-icon>
+            <span>Events</span>
+          </el-menu-item>
+          <el-menu-item index="/private/counter" :route="{ name: 'Counter' }">
+            <el-icon><brush /></el-icon>
+            <span>Counter</span>
+          </el-menu-item>
+        </el-menu>
+      </el-scrollbar>
+    </el-aside>
 
-  <RouterView />
+    <el-container>
+      <el-header style="text-align: right; font-size: 12px">
+        <div class="toolbar">
+          <el-dropdown>
+            <el-icon style="margin-right: 8px; margin-top: 1px"
+              ><setting
+            /></el-icon>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item>Sign out</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+          <el-space wrap size="large">
+            <span>{{ userName }}</span>
+          </el-space>
+          <el-button @click="signOut">Sign Out</el-button>
+        </div>
+      </el-header>
+
+      <el-main>
+        <el-scrollbar>
+          <RouterView />
+        </el-scrollbar>
+      </el-main>
+    </el-container>
+  </el-container>
+  <!-- <el-row class="w-full">
+    <el-col :span="12">
+      <h5 class="mb-2">Default colors</h5>
+      <el-menu default-active="/private/" router class="el-menu-vertical-demo">
+        <el-menu-item index="/private/" :route="{ name: 'Dashboard' }">
+          <el-icon><service /></el-icon>
+          <span>Dashboard</span>
+        </el-menu-item>
+        <el-menu-item index="/private/payments" :route="{ name: 'Payments' }">
+          <el-icon><money /></el-icon>
+          <span>Payments</span>
+        </el-menu-item>
+        <el-menu-item index="/private/events" :route="{ name: 'Events' }">
+          <el-icon><document /></el-icon>
+          <span>Events</span>
+        </el-menu-item>
+        <el-menu-item index="/private/counter" :route="{ name: 'Counter' }">
+          <el-icon><brush /></el-icon>
+          <span>Counter</span>
+        </el-menu-item>
+      </el-menu>
+    </el-col>
+    <el-col> <RouterView /> </el-col>
+  </el-row> -->
 </template>
 
 <style scoped>
+.layout-container-demo .el-header {
+  position: relative;
+  background-color: var(--el-color-primary-light-7);
+  color: var(--el-text-color-primary);
+}
+.layout-container-demo .el-aside {
+  color: var(--el-text-color-primary);
+  background: var(--el-color-primary-light-8);
+}
+.layout-container-demo .el-menu {
+  border-right: none;
+}
+.layout-container-demo .el-main {
+  padding: 0;
+}
+.layout-container-demo .toolbar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  right: 20px;
+}
 header {
   width: 100%;
   line-height: 1.5;
@@ -57,7 +131,7 @@ header {
   margin: 0 auto 2rem;
 } */
 
-.content {
+/* .content {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -113,5 +187,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-}
+} */
 </style>

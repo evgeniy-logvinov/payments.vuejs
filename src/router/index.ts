@@ -39,7 +39,7 @@ const router = createRouter({
             },
             {
               path: '/event/:id',
-              name: 'EventLayout',
+              name: 'Event',
               props: true,
               component: () => import('../views/private/event/EventLayout.vue'),
               children: [
