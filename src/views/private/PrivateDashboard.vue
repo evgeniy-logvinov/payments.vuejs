@@ -1,13 +1,7 @@
 <script lang="ts" setup>
-import { computed, onMounted } from 'vue'
-import { auth } from '../../firebaseConfig'
+import { computed } from 'vue'
 import { useUserStore } from '../../stores/user'
 import router from '../../router'
-
-auth.onAuthStateChanged(async (user) => {
-  const { fetchUser } = useUserStore()
-  await fetchUser(user)
-})
 
 const userName = computed(() => {
   const { userName } = useUserStore()

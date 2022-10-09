@@ -1,12 +1,12 @@
 import { reactive } from 'vue'
 import { defineStore } from 'pinia'
-import type { TariffType } from '@/interfaces/TariffType'
+// import type { TariffType } from '@/interfaces/TariffType'
 import type { PaymentsInfo } from '@/interfaces/PaymentsInfo'
 import type { CardInfo } from '@/interfaces/CardInfo'
 
 export const usePaymentsStore = defineStore('payments', () => {
   const payments: PaymentsInfo = reactive({
-    newTariff: null
+    // newTariff: null
   })
 
   async function buy() {
@@ -27,9 +27,10 @@ export const usePaymentsStore = defineStore('payments', () => {
     alert({ ...payments.cardInfo })
   }
 
-  function chooseType(type: TariffType) {
-    payments.newTariff = type
-  }
+  // function chooseType(type: TariffType) {
+  //   payments.newTariff = type
+  // }
 
-  return { payments, buy, chooseType, confirmPayment }
+  return { payments, buy, confirmPayment }
+  // return { payments, buy, chooseType, confirmPayment }
 })

@@ -7,6 +7,7 @@ import App from './App.vue'
 import router from './router'
 
 import './assets/main.css'
+import './index.css'
 // if you're using CDN, please remove this line.
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 

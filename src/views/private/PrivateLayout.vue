@@ -2,10 +2,26 @@
 import { computed } from 'vue'
 import router from '../../router'
 import { useUserStore } from '../../stores/user'
+import { auth } from '../../firebaseConfig'
+import { useRoute } from 'vue-router'
+
+auth.onAuthStateChanged(async (user) => {
+  const { fetchUser } = useUserStore()
+  await fetchUser(user)
+})
 
 const userName = computed(() => {
   const { userName } = useUserStore()
   return userName
+})
+
+const route = useRoute()
+
+const defaultActive = computed(() => {
+  if (route.path.match('payments')) {
+    return '/private/payments'
+  }
+  return route.path
 })
 
 const signOut = async () => {
@@ -16,15 +32,18 @@ const signOut = async () => {
 </script>
 
 <template>
-  <el-container class="layout-container-demo" style="height: 500px">
+  <el-container class="layout-container-demo" style="height: 100vh">
     <el-aside width="200px">
       <el-scrollbar>
         <el-menu
-          default-active="/private/"
+          :default-active="defaultActive"
           router
           class="el-menu-vertical-demo"
         >
-          <el-menu-item index="/private/" :route="{ name: 'Dashboard' }">
+          <el-menu-item
+            index="/private/dashboard"
+            :route="{ name: 'Dashboard' }"
+          >
             <el-icon><service /></el-icon>
             <span>Dashboard</span>
           </el-menu-item>
@@ -66,7 +85,7 @@ const signOut = async () => {
 
       <el-main>
         <el-scrollbar>
-          <RouterView />
+          <RouterView :key="$route.fullPath" />
         </el-scrollbar>
       </el-main>
     </el-container>

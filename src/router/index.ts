@@ -1,4 +1,5 @@
 import { auth } from '@/firebaseConfig'
+import type { TariffType } from '@/interfaces/TariffType'
 import { onAuthStateChanged } from '@firebase/auth'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -15,7 +16,7 @@ const router = createRouter({
       redirect: { name: 'Private' },
       children: [
         {
-          path: '/private',
+          path: 'private',
           name: 'Private',
           // props: (route) => ({ page: parseInt(route.query.page as string) || 1 }),
           component: () => import('../views/private/PrivateLayout.vue'),
@@ -25,12 +26,12 @@ const router = createRouter({
           },
           children: [
             {
-              path: '',
+              path: 'dashboard',
               name: 'Dashboard',
               component: () => import('../views/private/PrivateDashboard.vue')
             },
             {
-              path: '/events',
+              path: 'events',
               name: 'Events',
               props: (route) => ({
                 page: parseInt(route.query.page as string) || 1
@@ -38,7 +39,7 @@ const router = createRouter({
               component: () => import('../views/private/PrivateEvents.vue')
             },
             {
-              path: '/event/:id',
+              path: 'event/:id',
               name: 'Event',
               props: true,
               component: () => import('../views/private/event/EventLayout.vue'),
@@ -64,21 +65,34 @@ const router = createRouter({
               ]
             },
             {
-              path: '/payments',
+              path: 'payments',
               name: 'Payments',
               props: true,
+              redirect: { name: 'PaymentsDetails' },
               component: () =>
-                import('../views/private/payments/PaymentsLayout.vue')
+                import('../views/private/payments/PaymentsLayout.vue'),
+              children: [
+                {
+                  path: '',
+                  name: 'PaymentsDetails',
+                  props: true,
+                  component: () =>
+                    import('../views/private/payments/PaymentsDetails.vue')
+                },
+                {
+                  path: 'info',
+                  name: 'PaymentsInfo',
+                  props: (route) => ({
+                    tariff: route.query.tariff as TariffType
+                  }),
+                  // props: true,
+                  component: () =>
+                    import('../views/private/payments/PaymentsInfo.vue')
+                }
+              ]
             },
             {
-              path: '/payments-info',
-              name: 'PaymentsInfo',
-              props: true,
-              component: () =>
-                import('../views/private/payments/PaymentsInfo.vue')
-            },
-            {
-              path: '/counter',
+              path: 'counter',
               name: 'Counter',
               props: { showExtra: true },
               component: () => import('../views/private/PrivateCounter.vue')
