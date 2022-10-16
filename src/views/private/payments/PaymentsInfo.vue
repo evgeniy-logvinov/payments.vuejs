@@ -8,6 +8,7 @@ import type { TariffType } from '../../../interfaces/TariffType'
 const currentYear = ref<number>(new Date().getFullYear())
 const error = ref<string | null>(null)
 const cardInfo = reactive<CardInfo>({
+  tariff: null,
   cardNumber: null,
   cardHolders: null,
   cvv: null,
@@ -21,15 +22,10 @@ const props = withDefaults(defineProps<{ tariff?: TariffType | null }>(), {
   tariff: null
 })
 
-// const payments = computed(() => {
-//   const { payments } = usePaymentsStore()
-//   return payments
-// })
-
 async function onBuy() {
   try {
     const { confirmPayment } = usePaymentsStore()
-    await confirmPayment(cardInfo)
+    await confirmPayment({ ...cardInfo, tariff: props.tariff })
     // router.go(-1)
     router.push({ name: 'Payments' })
   } catch (err) {

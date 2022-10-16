@@ -17,13 +17,17 @@ const form: {
   email: '',
   password: ''
 })
-const signInWIthGoogle = () => {
+const signInWIthGoogle = async () => {
   const provider = new GoogleAuthProvider()
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      router.push({ name: 'Dashboard' })
-    })
-    .catch(() => console.log('error'))
+  try {
+    // https://firebase.google.com/docs/auth/web/google-signin
+    provider.addScope('email')
+    const result = await signInWithPopup(auth, provider)
+    console.log(result)
+    router.push({ name: 'Dashboard' })
+  } catch (err) {
+    console.log('error', err)
+  }
 }
 async function onSignIn() {
   try {

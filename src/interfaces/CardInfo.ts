@@ -1,4 +1,7 @@
+import type { TariffType } from './TariffType'
+
 export interface CardInfo {
+  tariff: TariffType
   cardNumber: number | null
   cardHolders: string | null
   until: {
